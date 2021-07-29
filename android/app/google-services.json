@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "289657184565",
+    "project_id": "hw2hglasses",
+    "storage_bucket": "hw2hglasses.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289657184565:android:3a03b2b2922a3dc5c3ac7c",
+        "android_client_info": {
+          "package_name": "com.flutterflow.glassesin2h"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "289657184565-sh0bca6s81pch4lhlight30eg8coethb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB68X08I-164b4BO6qBMLNIZvrOuQOOSSs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "289657184565-sh0bca6s81pch4lhlight30eg8coethb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "289657184565-2cvt824tlsn7krhml422dvhhueeodok5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.flutterflow.glassesin2h"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
