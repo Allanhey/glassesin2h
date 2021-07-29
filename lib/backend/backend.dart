@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 
 import 'schema/frames_record.dart';
+import 'schema/users_record.dart';
+import 'schema/addresslist_record.dart';
 import 'schema/serializers.dart';
 
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,12 +14,28 @@ export 'schema/index.dart';
 export 'schema/serializers.dart';
 
 export 'schema/frames_record.dart';
+export 'schema/users_record.dart';
+export 'schema/addresslist_record.dart';
 
 Stream<List<FramesRecord>> queryFramesRecord(
         {Query Function(Query) queryBuilder,
         int limit = -1,
         bool singleRecord = false}) =>
     queryCollection(FramesRecord.collection, FramesRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+Stream<List<UsersRecord>> queryUsersRecord(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollection(UsersRecord.collection, UsersRecord.serializer,
+        queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
+
+Stream<List<AddresslistRecord>> queryAddresslistRecord(
+        {Query Function(Query) queryBuilder,
+        int limit = -1,
+        bool singleRecord = false}) =>
+    queryCollection(AddresslistRecord.collection, AddresslistRecord.serializer,
         queryBuilder: queryBuilder, limit: limit, singleRecord: singleRecord);
 
 Stream<List<T>> queryCollection<T>(

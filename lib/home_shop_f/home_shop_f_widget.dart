@@ -1,9 +1,9 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../custmer_prof_f/custmer_prof_f_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../product_page_f/product_page_f_widget.dart';
-import '../welcomepage_f/welcomepage_f_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,18 +23,6 @@ class _HomeShopFWidgetState extends State<HomeShopFWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Color(0xFF262D34),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          print('FloatingActionButton pressed ...');
-        },
-        backgroundColor: FlutterFlowTheme.primaryColor,
-        elevation: 8,
-        child: Icon(
-          Icons.settings_outlined,
-          color: Colors.black,
-          size: 24,
-        ),
-      ),
       body: Stack(
         children: [
           Align(
@@ -64,36 +52,25 @@ class _HomeShopFWidgetState extends State<HomeShopFWidget> {
                               padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                               child: Text(
                                 'Hey, ',
-                                textAlign: TextAlign.end,
+                                textAlign: TextAlign.start,
                                 style: FlutterFlowTheme.title1.override(
                                   fontFamily: 'Raleway',
                                 ),
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                            child: Text(
-                              currentUserEmail,
-                              style: FlutterFlowTheme.title1.override(
-                                fontFamily: 'Raleway',
-                              ),
-                            ),
-                          ),
                           InkWell(
                             onLongPress: () async {
                               await signOut();
-                              await Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => WelcomepageFWidget(),
-                                ),
-                                (r) => false,
-                              );
                             },
                             child: IconButton(
-                              onPressed: () {
-                                print('IconButton pressed ...');
+                              onPressed: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => CustmerProfFWidget(),
+                                  ),
+                                );
                               },
                               icon: Icon(
                                 Icons.account_circle,
@@ -101,6 +78,59 @@ class _HomeShopFWidgetState extends State<HomeShopFWidget> {
                                 size: 50,
                               ),
                               iconSize: 50,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: StreamBuilder<List<UsersRecord>>(
+                              stream: queryUsersRecord(
+                                singleRecord: true,
+                              ),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50,
+                                      height: 50,
+                                      child: CircularProgressIndicator(
+                                        color: FlutterFlowTheme.secondaryColor,
+                                      ),
+                                    ),
+                                  );
+                                }
+                                List<UsersRecord> textUsersRecordList =
+                                    snapshot.data;
+                                // Customize what your widget looks like with no query results.
+                                if (snapshot.data.isEmpty) {
+                                  return Container(
+                                    height: 100,
+                                    child: Center(
+                                      child: Text('No results.'),
+                                    ),
+                                  );
+                                }
+                                final textUsersRecord =
+                                    textUsersRecordList.first;
+                                return Padding(
+                                  padding: EdgeInsets.fromLTRB(0, 0, 50, 20),
+                                  child: Text(
+                                    textUsersRecord.displayName,
+                                    textAlign: TextAlign.start,
+                                    style: FlutterFlowTheme.title1.override(
+                                      fontFamily: 'Raleway',
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           )
                         ],
@@ -248,6 +278,23 @@ class _HomeShopFWidgetState extends State<HomeShopFWidget> {
                                                                 BoxDecoration(
                                                               color: Color(
                                                                   0xFFEEEEEE),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .only(
+                                                                bottomLeft: Radius
+                                                                    .circular(
+                                                                        0),
+                                                                bottomRight:
+                                                                    Radius
+                                                                        .circular(
+                                                                            0),
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        10),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        10),
+                                                              ),
                                                               shape: BoxShape
                                                                   .rectangle,
                                                             ),
@@ -277,7 +324,7 @@ class _HomeShopFWidgetState extends State<HomeShopFWidget> {
                                                                 width: 100,
                                                                 height: 100,
                                                                 fit: BoxFit
-                                                                    .fitWidth,
+                                                                    .fitHeight,
                                                               ),
                                                             ),
                                                           ),
@@ -286,93 +333,125 @@ class _HomeShopFWidgetState extends State<HomeShopFWidget> {
                                                     )
                                                   ],
                                                 ),
-                                                Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsets.fromLTRB(
-                                                              0, 0, 0, 8),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceAround,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Expanded(
-                                                            child: Padding(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .fromLTRB(
-                                                                          3,
-                                                                          3,
-                                                                          3,
-                                                                          0),
-                                                              child: Text(
-                                                                gridViewFramesRecord
-                                                                    .modelname,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .start,
-                                                                style: FlutterFlowTheme
-                                                                    .subtitle1
-                                                                    .override(
-                                                                  fontFamily:
-                                                                      'Raleway',
+                                                Expanded(
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsets.fromLTRB(
+                                                                0, 0, 0, 8),
+                                                        child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceAround,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Expanded(
+                                                              child: Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .fromLTRB(
+                                                                            3,
+                                                                            3,
+                                                                            3,
+                                                                            0),
+                                                                child: Text(
+                                                                  gridViewFramesRecord
+                                                                      .modelname,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .start,
+                                                                  style: FlutterFlowTheme
+                                                                      .subtitle1
+                                                                      .override(
+                                                                    fontFamily:
+                                                                        'Raleway',
+                                                                    fontSize:
+                                                                        18,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsets.fromLTRB(
+                                                                0, 0, 0, 8),
+                                                        child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceAround,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Expanded(
+                                                              child: Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .fromLTRB(
+                                                                            3,
+                                                                            3,
+                                                                            3,
+                                                                            0),
+                                                                child: Text(
+                                                                  gridViewFramesRecord
+                                                                      .color,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .start,
+                                                                  style: FlutterFlowTheme
+                                                                      .subtitle1
+                                                                      .override(
+                                                                    fontFamily:
+                                                                        'Raleway',
+                                                                    fontSize:
+                                                                        12,
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsets.fromLTRB(
-                                                              0, 0, 0, 8),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceAround,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Expanded(
-                                                            child: Padding(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .fromLTRB(
-                                                                          3,
-                                                                          3,
-                                                                          3,
-                                                                          0),
-                                                              child: Text(
-                                                                gridViewFramesRecord
-                                                                    .price,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .end,
-                                                                style: FlutterFlowTheme
-                                                                    .subtitle1
-                                                                    .override(
-                                                                  fontFamily:
-                                                                      'Raleway',
+                                                            Expanded(
+                                                              child: Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .fromLTRB(
+                                                                            3,
+                                                                            3,
+                                                                            3,
+                                                                            0),
+                                                                child: Text(
+                                                                  gridViewFramesRecord
+                                                                      .price,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .end,
+                                                                  style: FlutterFlowTheme
+                                                                      .subtitle1
+                                                                      .override(
+                                                                    fontFamily:
+                                                                        'Raleway',
+                                                                    fontSize:
+                                                                        12,
+                                                                  ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                    )
-                                                  ],
+                                                            )
+                                                          ],
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
                                                 )
                                               ],
                                             ),

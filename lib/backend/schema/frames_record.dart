@@ -14,10 +14,13 @@ abstract class FramesRecord
   String get modelname;
 
   @nullable
+  String get price;
+
+  @nullable
   String get glasseimg;
 
   @nullable
-  String get price;
+  String get color;
 
   @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
@@ -25,8 +28,9 @@ abstract class FramesRecord
 
   static void _initializeBuilder(FramesRecordBuilder builder) => builder
     ..modelname = ''
+    ..price = ''
     ..glasseimg = ''
-    ..price = '';
+    ..color = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('frames');
@@ -47,12 +51,14 @@ abstract class FramesRecord
 
 Map<String, dynamic> createFramesRecordData({
   String modelname,
-  String glasseimg,
   String price,
+  String glasseimg,
+  String color,
 }) =>
     serializers.toFirestore(
         FramesRecord.serializer,
         FramesRecord((f) => f
           ..modelname = modelname
+          ..price = price
           ..glasseimg = glasseimg
-          ..price = price));
+          ..color = color));
